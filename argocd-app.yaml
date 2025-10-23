@@ -8,10 +8,11 @@ spec:
   source:
     repoURL: https://github.com/HannaJyha/webapp-helm.git 
     targetRevision: HEAD
-    path: .
+    path: webapp-chart 
+    
     helm:
       valueFiles:
-        - webapp-chart/values.yaml
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: app 

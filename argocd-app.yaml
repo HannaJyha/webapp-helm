@@ -11,7 +11,7 @@ spec:
     path: webapp-chart
     helm:
       valueFiles:
-        - webapp-chart/values.yaml
+        - values.yaml
 
   destination:
     server: https://kubernetes.default.svc

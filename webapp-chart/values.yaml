@@ -1,8 +1,53 @@
 replicaCount: 1
 
 image:
-  repository: devops-gitlab.inno.ws/hanna.jyha/webapp-app 
-  tag: "initial"
-
+  repository: docker.io/hannajyha/webapp-app 
+  tag: "initial" 
+  pullPolicy: IfNotPresent
+  
 service:
+  type: ClusterIP
   port: 80
+  
+ingress:
+  enabled: true
+  host: webapp.local.dev
+  tlsSecretName: webapp-tls
+  
+resources:
+  app:
+    requests:
+      cpu: "100m"
+      memory: "64Mi"
+    limits:
+      cpu: "200m"
+      memory: "128Mi"
+  nginx:
+    requests:
+      cpu: "50m"
+      memory: "32Mi"
+    limits:
+      cpu: "100m"
+      memory: "64Mi"
+      
+appSecret:
+  name: app-secrets
+  key: app_secret
+  valueBase64: "V293ISBIaSA7KQ=="
+  
+nginxConfig:
+  name: webapp-nginx-config
+  config: |
+    events {
+        worker_connections 1024;
+    }
+    http {
+        server {
+            listen 80;
+            location / {
+                proxy_pass http://127.0.0.1:8080; 
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+            }
+        }
+    }

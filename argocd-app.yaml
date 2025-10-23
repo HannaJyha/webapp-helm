@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/HannaJyha/webapp-helm.git 
     targetRevision: HEAD
-    path: webapp-chart
+    path: .
     helm:
       valueFiles:
         - values.yaml

@@ -1,0 +1,8 @@
+replicaCount: 1
+
+image:
+  repository: devops-gitlab.inno.ws/hanna.jyha/webapp-app 
+  tag: "initial"
+
+service:
+  port: 80

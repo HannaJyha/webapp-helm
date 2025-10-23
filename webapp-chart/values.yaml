@@ -1,19 +1,15 @@
 replicaCount: 1
-
 image:
-  repository: docker.io/hannajyha/webapp-app 
-  tag: "initial" 
+  repository: docker.io/hanna22222/webapp-app
+  tag: "dev-v1.1"
   pullPolicy: IfNotPresent
-  
 service:
   type: ClusterIP
   port: 80
-  
 ingress:
   enabled: true
   host: webapp.local.dev
   tlsSecretName: webapp-tls
-  
 resources:
   app:
     requests:
@@ -29,25 +25,10 @@ resources:
     limits:
       cpu: "100m"
       memory: "64Mi"
-      
 appSecret:
   name: app-secrets
   key: app_secret
   valueBase64: "V293ISBIaSA7KQ=="
-  
 nginxConfig:
   name: webapp-nginx-config
-  config: |
-    events {
-        worker_connections 1024;
-    }
-    http {
-        server {
-            listen 80;
-            location / {
-                proxy_pass http://127.0.0.1:8080; 
-                proxy_set_header Host $host;
-                proxy_set_header X-Real-IP $remote_addr;
-            }
-        }
-    }
+  config: "events {\n    worker_connections 1024;\n}\nhttp {\n    server {\n        listen 80;\n        location / {\n            proxy_pass http://127.0.0.1:8080; \n            proxy_set_header Host $host;\n            proxy_set_header X-Real-IP $remote_addr;\n        }\n    }\n}"

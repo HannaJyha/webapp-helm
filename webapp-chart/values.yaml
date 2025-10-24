@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   repository: docker.io/hanna22222/webapp-app
-  tag: "dev-v1.1"
+  tag: "dev-v2"
   pullPolicy: IfNotPresent
 service:
   type: ClusterIP
